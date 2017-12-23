@@ -1,5 +1,6 @@
 package ru.alexandr.pc.p0391_sqliteonupgradedb;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -49,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 while (c.moveToNext());
             }
-        }
+        } else
+            Log.d(publicLog, s + ". Cursor is null!");
     }
 
     class DBHelper extends SQLiteOpenHelper {
@@ -60,8 +62,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            String[] name = {"Иван", "Александр", "Мария", "Александра", "Максим"};
+            String[] position = {"дворник", "официант", "таксист", "продавец", "строитель"};
+
+            Log.d(publicLog, "Создание таблицы");
             sqLiteDatabase.execSQL("create table People (" +
-                    "");
+                    "id integer primary key autoincrement," +
+                    "name text," +
+                    "position text)");
+
+            Log.d(publicLog, "Заполняем таблицу");
+            ContentValues cv = new ContentValues();
+            for (int i = 0; i < name.length; i++) {
+                cv.clear();
+                cv.put("name", name[i]);
+                cv.put("position", position[i]);
+                db.insert("Baza", null, cv);
+            }
         }
 
         @Override
