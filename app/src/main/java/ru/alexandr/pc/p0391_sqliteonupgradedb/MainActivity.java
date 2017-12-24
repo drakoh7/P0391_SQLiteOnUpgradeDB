@@ -12,7 +12,8 @@ import android.util.Log;
 public class MainActivity extends AppCompatActivity {
 
     SQLiteDatabase db = null;
-    DBHelper dbHelper = null;
+    DBHelper dbHelper =  null;
+    String s = null;
     final String publicLog = "LogPub";
 
     @Override
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d(publicLog, "Начало");
         Log.d(publicLog, "БД создана");
         dbHelper = new DBHelper(this);
+        s = "1";
+
+        Log.d(publicLog, "Bug: " + dbHelper.getWritableDatabase().toString() + " " + db);
         db = dbHelper.getWritableDatabase();
 
         writeLogs(db);
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 cv.clear();
                 cv.put("name", name[i]);
                 cv.put("position", position[i]);
-                db.insert("Baza", null, cv);
+                sqLiteDatabase.insert("People", null, cv);
             }
         }
 
